@@ -1,5 +1,5 @@
 var platform = require('os').platform;
-var commandExists = require('../dist/index').default;
+var commandExists = require('../dist/linux-command-exists').commandExists;
 
 describe('Test the commandExists function', () => {
 	if (platform() === 'linux') {

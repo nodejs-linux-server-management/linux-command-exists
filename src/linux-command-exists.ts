@@ -1,7 +1,7 @@
 import { spawn } from "child_process";
 import { platform } from "os";
 
-export default function commandExists(command: string): Promise<boolean> {
+export function commandExists(command: string): Promise<boolean> {
 	return new Promise((resolve, reject) => {
 		if(platform() === 'linux'){
 			let exists = spawn('command', ['-v', command], { shell: true });

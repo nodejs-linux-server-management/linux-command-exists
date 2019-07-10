@@ -32,4 +32,4 @@ function commandExists(command) {
         }
     });
 }
-exports.default = commandExists;
+exports.commandExists = commandExists;

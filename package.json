@@ -1,13 +1,13 @@
 {
 	"name": "linux-command-exists",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Check if a command exists",
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
+	"main": "dist/linux-command-exists.js",
+	"types": "dist/linux-command-exists.d.ts",
 	"scripts": {
-		"build": "tsc",
-		"test": "tsc && mocha",
-		"prepublish": "tsc && mocha"
+		"build": "tsc --declaration",
+		"test": "tsc --declaration && mocha",
+		"prepare": "tsc --declaration && mocha"
 	},
 	"repository": {
 		"type": "git",
