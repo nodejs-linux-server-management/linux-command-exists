@@ -9,12 +9,20 @@
 		"test": "tsc && mocha",
 		"prepublish": "tsc && mocha"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nodejs-linux-server-management/linux-command-exists.git"
+	},
 	"keywords": [
 		"linux",
 		"shell"
 	],
 	"author": "Alexandre Picavet",
 	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/nodejs-linux-server-management/linux-command-exists/issues"
+	},
+	"homepage": "https://github.com/nodejs-linux-server-management/linux-command-exists#readme",
 	"devDependencies": {
 		"@types/node": "^12.6.2",
 		"mocha": "^6.1.4",
