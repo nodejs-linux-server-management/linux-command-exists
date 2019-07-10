@@ -1,0 +1,23 @@
+{
+	"name": "linux-command-exists",
+	"version": "0.0.1",
+	"description": "Check if a command exists",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"build": "tsc",
+		"test": "tsc && mocha",
+		"prepublish": "tsc && mocha"
+	},
+	"keywords": [
+		"linux",
+		"shell"
+	],
+	"author": "Alexandre Picavet",
+	"license": "GPL-3.0",
+	"devDependencies": {
+		"@types/node": "^12.6.2",
+		"mocha": "^6.1.4",
+		"typescript": "^3.5.3"
+	}
+}
