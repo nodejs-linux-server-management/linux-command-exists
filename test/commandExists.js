@@ -6,8 +6,8 @@ describe('Test the commandExists function', () => {
 		it('the platform is linux so it sould works', (done) => {
 			commandExists('').then(() => {
 				done();
-			}).catch(() => {
-				done(new Error());
+			}).catch((e) => {
+				done(e);
 			});
 		});
 		it('should know the command "ls"', (done) => {
@@ -17,6 +17,8 @@ describe('Test the commandExists function', () => {
 				}else{
 					done(new Error());
 				}
+			}).catch((e)=>{
+				done(e);
 			});
 		});
 		it('should not know the command "dcejvhiosvbfh"', (done) => {
@@ -26,19 +28,20 @@ describe('Test the commandExists function', () => {
 				} else {
 					done(new Error());
 				}
+			}).catch((e)=>{
+				done(e);
 			});
 		});
 	} else {
 		it('the platform is not linux so it should run into an error', (done) => {
 			commandExists('ls').then(() => {
 				done(new Error());
-			}).catch((error) => {
-				if(error === Error('This module only runs on linux')){
+			}).catch((e) => {
+				if(e === Error('This module only runs on linux')){
 					done();
 				}else{
-					done(new Error('Didn\'t expected this error to happend'));
+					done(new Error(`Didn't expected this error to happend\nError:\n${e}`));
 				}
-
 			});
 		});
 	}

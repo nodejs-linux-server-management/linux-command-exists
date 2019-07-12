@@ -1,35 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var child_process_1 = require("child_process");
-var os_1 = require("os");
+var linux_shell_command_1 = require("linux-shell-command");
 function commandExists(command) {
     return new Promise(function (resolve, reject) {
-        if (os_1.platform() === 'linux') {
-            var exists = child_process_1.spawn('command', ['-v', command], { shell: true });
-            var stderr = "";
-            exists.stderr.on('data', function (data) {
-                stderr += data.toString();
-            });
-            exists.on('exit', function (code, signal) {
-                if (signal === null) {
-                    if (code === null || code === 0) {
+        linux_shell_command_1.execute('command -v \'!?!\'', [command]).then(function (_a) {
+            var shellCommand = _a.shellCommand;
+            if (shellCommand.exitSignal === null) {
+                switch (shellCommand.exitStatus) {
+                    case null:
+                    case 0:
                         resolve(true);
-                    }
-                    else if (code === 1) {
+                        break;
+                    case 1:
                         resolve(false);
-                    }
-                    else {
-                        reject(Error("process terminated with the exit code " + code + "\nError:\n" + stderr));
-                    }
+                        break;
+                    default:
+                        reject(Error("process terminated with the exit code " + shellCommand.exitStatus + "\nError:\n" + shellCommand.stderr));
+                        break;
                 }
-                else {
-                    reject(Error("process killed by the signal: " + signal));
-                }
-            });
-        }
-        else {
-            reject(Error("This module only runs on linux"));
-        }
+            }
+            else {
+                reject(Error("process killed by the signal: " + shellCommand.exitSignal));
+            }
+        }).catch(function (e) {
+            reject(e);
+        });
     });
 }
 exports.commandExists = commandExists;

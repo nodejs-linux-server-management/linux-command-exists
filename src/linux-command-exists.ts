@@ -1,29 +1,26 @@
-import { spawn } from "child_process";
-import { platform } from "os";
+import { execute } from "linux-shell-command";
 
 export function commandExists(command: string): Promise<boolean> {
 	return new Promise((resolve, reject) => {
-		if(platform() === 'linux'){
-			let exists = spawn('command', ['-v', command], { shell: true });
-			var stderr: string = "";
-			exists.stderr.on('data', (data) => {
-				stderr += data.toString();
-			});
-			exists.on('exit', (code, signal) => {
-				if (signal === null) {
-					if (code === null || code === 0) {
+		execute('command -v \'!?!\'', [command]).then(({ shellCommand: shellCommand }) => {
+			if (shellCommand.exitSignal === null) {
+				switch (shellCommand.exitStatus) {
+					case null:
+					case 0:
 						resolve(true);
-					} else if (code === 1) {
+						break;
+					case 1:
 						resolve(false);
-					} else {
-						reject(Error(`process terminated with the exit code ${code}\nError:\n${stderr}`));
-					}
-				} else {
-					reject(Error(`process killed by the signal: ${signal}`));
+						break;
+					default:
+						reject(Error(`process terminated with the exit code ${shellCommand.exitStatus}\nError:\n${shellCommand.stderr}`));
+						break;
 				}
-			});
-		}else{
-			reject(Error(`This module only runs on linux`));
-		}
+			} else {
+				reject(Error(`process killed by the signal: ${shellCommand.exitSignal}`));
+			}
+		}).catch((e) => {
+			reject(e);
+		});
 	});
 }
