@@ -1,6 +1,6 @@
 {
 	"name": "linux-command-exists",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Check if a command exists",
 	"main": "dist/linux-command-exists.js",
 	"types": "dist/linux-command-exists.d.ts",

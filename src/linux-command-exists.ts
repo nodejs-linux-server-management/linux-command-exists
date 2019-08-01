@@ -1,7 +1,9 @@
 import { execute } from "linux-shell-command";
 
-export function commandExists(command: string): Promise<boolean> {
-	return new Promise((resolve, reject) => {
+export function commandExists(command: string): Promise<boolean>;
+export function commandExists(command: string, callback: (exists: boolean) => void): void
+export function commandExists(command: string, callback?: (exists: boolean) => void): Promise<boolean> | void {
+	var result: Promise<boolean> = new Promise((resolve, reject) => {
 		execute('command -v \'!?!\'', [command]).then(({ shellCommand: shellCommand }) => {
 			if (shellCommand.exitSignal === null) {
 				switch (shellCommand.exitStatus) {
@@ -23,4 +25,14 @@ export function commandExists(command: string): Promise<boolean> {
 			reject(e);
 		});
 	});
+
+	if (typeof callback === 'undefined') {
+		return result;
+	} else {
+		result.then((r) => {
+			callback(r);
+		}).catch((e) => {
+			throw e;
+		})
+	}
 }
