@@ -1,4 +1,6 @@
-# Check if a command exists
+# linux-command-exists
+
+Check if a command exists
 
 ## Examples
 
