@@ -2,16 +2,16 @@
 var platform = require('os').platform;
 var commandExists = require('../dist/linux-command-exists').commandExists;
 
-describe('Test the commandExists function (Promise)', () => {
+describe('#Test the commandExists function (Promise)', () => {
 	if (platform() === 'linux') {
-		it('The platform is linux so it should works', (done) => {
+		it('#The platform is linux so it should works', (done) => {
 			commandExists('').then(() => {
 				done();
 			}).catch((e) => {
 				done(e);
 			});
 		});
-		it('Should know the command "ls"', (done) => {
+		it('#Should know the command "ls"', (done) => {
 			commandExists('ls').then((exists) => {
 				if (exists === true) {
 					done();
@@ -22,7 +22,7 @@ describe('Test the commandExists function (Promise)', () => {
 				done(e);
 			});
 		});
-		it('Should not know the command "dcejvhiosvbfh"', (done) => {
+		it('#Should not know the command "dcejvhiosvbfh"', (done) => {
 			commandExists('dcejvhiosvbfh').then((exists) => {
 				if (exists === false) {
 					done();
@@ -34,11 +34,11 @@ describe('Test the commandExists function (Promise)', () => {
 			});
 		});
 	} else {
-		it('The platform is not linux so it should run into an error', (done) => {
+		it('#The platform is not linux so it should run into an error', (done) => {
 			commandExists('').then(() => {
 				done(new Error('The platform is detected as it is linux'));
 			}).catch((e) => {
-				if (e === Error('This module only runs on linux')) {
+				if (e.message === 'This module only runs on linux') {
 					done();
 				} else {
 					done(new Error(`Didn't expected this error to happend\nError:\n${e}`));
@@ -49,9 +49,9 @@ describe('Test the commandExists function (Promise)', () => {
 
 });
 
-describe('Test the commandExists function (Callback)', () => {
+describe('#Test the commandExists function (Callback)', () => {
 	if (platform() === 'linux') {
-		it('The platform is linux so it should works', (done) => {
+		it('#The platform is linux so it should works', (done) => {
 			try {
 				commandExists('', () => {
 					done();
@@ -60,7 +60,7 @@ describe('Test the commandExists function (Callback)', () => {
 				done(e);
 			}
 		});
-		it('Should know the command "ls"', (done) => {
+		it('#Should know the command "ls"', (done) => {
 			try {
 				commandExists('ls', (exists) => {
 					if (exists === true) {
@@ -73,7 +73,7 @@ describe('Test the commandExists function (Callback)', () => {
 				done(e);
 			}
 		});
-		it('Should not know the command "dcejvhiosvbfh"', (done) => {
+		it('#Should not know the command "dcejvhiosvbfh"', (done) => {
 			try {
 				commandExists('dcejvhiosvbfh', (exists) => {
 					if (exists === false) {
@@ -87,13 +87,13 @@ describe('Test the commandExists function (Callback)', () => {
 			}
 		});
 	} else {
-		it('The platform is not linux so it should run into an error', (done) => {
+		it('#The platform is not linux so it should run into an error', (done) => {
 			try {
 				commandExists('', () => {
 					done(new Error('The platform is detected as it is linux'));
 				});
 			} catch (e) {
-				if (e === Error('This module only runs on linux')) {
+				if (e.message === 'This module only runs on linux') {
 					done();
 				} else {
 					done(new Error(`Didn't expected this error to happend\nError:\n${e}`));

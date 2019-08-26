@@ -1,6 +1,6 @@
 {
 	"name": "linux-command-exists",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "Check if a command exists",
 	"main": "dist/linux-command-exists.js",
 	"types": "dist/linux-command-exists.d.ts",
@@ -26,11 +26,11 @@
 	},
 	"homepage": "https://github.com/nodejs-linux-server-management/linux-command-exists#readme",
 	"devDependencies": {
-		"@types/node": "^12.6.2",
-		"mocha": "^6.1.4",
+		"@types/node": "^12.7.2",
+		"mocha": "^6.2.0",
 		"typescript": "^3.5.3"
 	},
 	"dependencies": {
-		"linux-shell-command": "0.0.2"
+		"linux-shell-command": "0.0.5"
 	}
 }
