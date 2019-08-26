@@ -2,13 +2,13 @@
 var platform = require('os').platform;
 var commandExists = require('../dist/linux-command-exists').commandExists;
 
-describe('#Test the commandExists function (Promise)', () => {
+describe('#commandExists (Promise)', () => {
 	if (platform() === 'linux') {
 		it('#The platform is linux so it should works', (done) => {
 			commandExists('').then(() => {
 				done();
 			}).catch((e) => {
-				done(e);
+				done(new Error(`Didn't expected an error to happend\nError:\n${e}`));
 			});
 		});
 		it('#Should know the command "ls"', (done) => {
@@ -49,56 +49,57 @@ describe('#Test the commandExists function (Promise)', () => {
 
 });
 
-describe('#Test the commandExists function (Callback)', () => {
+describe('#commandExists (Callback)', () => {
 	if (platform() === 'linux') {
 		it('#The platform is linux so it should works', (done) => {
-			try {
-				commandExists('', () => {
+			commandExists('', (error) => {
+				if (error) {
+					done(new Error(`Didn't expected an error to happend\nError:\n${error}`));
+				} else {
 					done();
-				});
-			} catch (e) {
-				done(e);
-			}
+				}
+			});
 		});
 		it('#Should know the command "ls"', (done) => {
-			try {
-				commandExists('ls', (exists) => {
-					if (exists === true) {
+			commandExists('ls', (error, result) => {
+				if (error) {
+					done(new Error(`Didn't expected an error to happend\nError:\n${error}`));
+				} else {
+					if (result === true) {
 						done();
 					} else {
 						done(new Error('The command "ls" should exists'));
 					}
-				});
-			} catch (e) {
-				done(e);
-			}
+				}
+			});
 		});
 		it('#Should not know the command "dcejvhiosvbfh"', (done) => {
-			try {
-				commandExists('dcejvhiosvbfh', (exists) => {
-					if (exists === false) {
+			commandExists('dcejvhiosvbfh', (error, result) => {
+				if (error) {
+					done(new Error(`Didn't expected an error to happend\nError:\n${error}`));
+				} else {
+					if (result === false) {
 						done();
 					} else {
 						done(new Error('The command dcejvhiosvbfh shouldn\'t exists'));
 					}
-				});
-			} catch (e) {
-				done(e);
-			}
+				}
+			});
 		});
 	} else {
 		it('#The platform is not linux so it should run into an error', (done) => {
-			try {
-				commandExists('', () => {
-					done(new Error('The platform is detected as it is linux'));
-				});
-			} catch (e) {
-				if (e.message === 'This module only runs on linux') {
-					done();
+			commandExists('', (error) => {
+				if (error) {
+					if (error.message === 'This module only runs on linux') {
+						done();
+					} else {
+						done(new Error(`Didn't expected this error to happend\nError:\n${error}`));
+					}
+
 				} else {
-					done(new Error(`Didn't expected this error to happend\nError:\n${e}`));
+					done(new Error('The platform is detected as it is linux'));
 				}
-			}
+			});
 		});
 	}
 });
