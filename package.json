@@ -27,7 +27,7 @@
 	"homepage": "https://github.com/nodejs-linux-server-management/linux-command-exists#readme",
 	"devDependencies": {
 		"@types/node": "^12.7.2",
-		"mocha": "^6.2.0",
+		"mocha": "^10.2.0",
 		"typescript": "^3.5.3"
 	},
 	"dependencies": {
